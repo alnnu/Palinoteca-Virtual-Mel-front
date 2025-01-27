@@ -24,7 +24,11 @@ const handler = NextAuth({
 						password: credentials?.password,
 					});
 
-					if (response.data.user && response.data.access && response.data.refreshToken) {
+					if (
+						response.data.user &&
+						response.data.access &&
+						response.data.refreshToken
+					) {
 						return {
 							...response.data.user,
 							access: response.data.access,
@@ -50,15 +54,25 @@ const handler = NextAuth({
 			return token;
 		},
 		async session({ session, token }) {
-                        session.user = token.user as { id: string; email: string; name: string };
+			session.user = token.user as {
+				id: string;
+				email: string;
+				name: string;
+			};
 			session.access = token.access as string;
 			session.refreshToken = token.refreshToken as string;
-                        console.log("session", session);
 			return session;
 		},
 	},
+	session: {
+		strategy: "jwt", 
+                maxAge: 60 * 60 * 5, 
+	},
+	jwt: {
+		secret: process.env.NEXTAUTH_SECRET,
+	},
 	pages: {
-		signIn: "/login", 
+		signIn: "/login",
 	},
 	secret: process.env.NEXTAUTH_SECRET,
 });

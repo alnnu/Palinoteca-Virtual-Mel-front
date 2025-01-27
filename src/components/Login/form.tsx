@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Button, Card, Col, Form, Input, Row } from "antd";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -9,16 +9,6 @@ export default function LoginForm() {
 	const [showPassword, setShowPassword] = useState(false);
 	const router = useRouter();
 	const [form] = Form.useForm();
-
-	const { data: session, status } = useSession();
-
-	if (status === "loading") {
-		return <p>Loading...</p>;
-	}
-
-	if (!session) {
-		return <p>You are not authenticated.</p>;
-	}
 
 	const onFinish = async (values: { email: string; password: string }) => {
 		try {
