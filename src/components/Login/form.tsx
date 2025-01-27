@@ -1,14 +1,24 @@
 "use client";
 import { useState } from "react";
 import { Button, Card, Col, Form, Input, Row } from "antd";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginForm() {
 	const [showPassword, setShowPassword] = useState(false);
 	const router = useRouter();
-
 	const [form] = Form.useForm();
+
+	const { data: session, status } = useSession();
+
+	if (status === "loading") {
+		return <p>Loading...</p>;
+	}
+
+	if (!session) {
+		return <p>You are not authenticated.</p>;
+	}
 
 	const onFinish = async (values: { email: string; password: string }) => {
 		try {
@@ -21,7 +31,7 @@ export default function LoginForm() {
 			if (result?.error) {
 				// setError(result.error);
 			} else {
-				router.push("/dashboard"); // Redirect to dashboard after successful login
+				router.push("/dashboard");
 			}
 		} catch (error) {
 			console.log("[LOGIN_ERROR]", error);
@@ -47,7 +57,6 @@ export default function LoginForm() {
 							className="max-w-sm md:w-[480px] rounded-2xl"
 							title="Login"
 						>
-							{/* <Label>Email</Label> */}
 							<Form.Item
 								label="Email"
 								name="email"
@@ -58,7 +67,10 @@ export default function LoginForm() {
 									},
 								]}
 							>
-								<Input placeholder="Endereço de Email" />
+								<Input
+									type="email"
+									placeholder="Endereço de Email"
+								/>
 							</Form.Item>
 							<Form.Item
 								label="Senha"
@@ -95,7 +107,14 @@ export default function LoginForm() {
 									</label>
 								</div>
 							</div>
-
+							<div>
+								<Link
+									href={"/register"}
+									className="flex my-4 items-center justify-between"
+								>
+									Criar uma conta
+								</Link>
+							</div>
 							<div>
 								<Form.Item>
 									<Button

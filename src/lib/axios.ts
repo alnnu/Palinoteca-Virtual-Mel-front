@@ -11,8 +11,8 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
 	async (config) => {
 		const session = await getSession();
-		if (session?.accessToken) {
-			config.headers.Authorization = `Bearer ${session.accessToken}`;
+		if (session?.access) {
+			config.headers.Authorization = `Bearer ${session.access}`;
 		}
 		return config;
 	},
@@ -36,14 +36,14 @@ apiClient.interceptors.response.use(
 				}
 
 				const refreshResponse = await axios.post(
-					`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/auth/refresh`,
+					`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/refresh`,
 					{
 						refreshToken: session.refreshToken,
 					}
 				);
 
-				const newAccessToken = refreshResponse.data.accessToken;
-				session.accessToken = newAccessToken;
+				const newAccessToken = refreshResponse.data.access;
+				session.access = newAccessToken;
 
 				originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 				return apiClient(originalRequest);

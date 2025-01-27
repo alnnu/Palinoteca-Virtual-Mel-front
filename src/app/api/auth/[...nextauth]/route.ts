@@ -4,7 +4,7 @@ import apiClient from "@/lib/axios";
 
 declare module "next-auth" {
 	interface User {
-		accessToken?: string;
+		access?: string;
 		refreshToken?: string;
 	}
 }
@@ -24,11 +24,11 @@ const handler = NextAuth({
 						password: credentials?.password,
 					});
 
-					if (response.data.user && response.data.tokens) {
+					if (response.data.user && response.data.access && response.data.refreshToken) {
 						return {
 							...response.data.user,
-							accessToken: response.data.tokens.accessToken,
-							refreshToken: response.data.tokens.refreshToken,
+							access: response.data.access,
+							refreshToken: response.data.refreshToken,
 						};
 					} else {
 						return null;
@@ -43,16 +43,17 @@ const handler = NextAuth({
 	callbacks: {
 		async jwt({ token, user }) {
 			if (user) {
-				token.user = user;
-				token.accessToken = user.accessToken;
+				token.user = { email: user.email, name: user.name };
+				token.access = user.access;
 				token.refreshToken = user.refreshToken;
 			}
 			return token;
 		},
 		async session({ session, token }) {
-			session.user = token.user as { id: string; email: string; name: string };
-			session.accessToken = token.accessToken as string;
+                        session.user = token.user as { id: string; email: string; name: string };
+			session.access = token.access as string;
 			session.refreshToken = token.refreshToken as string;
+                        console.log("session", session);
 			return session;
 		},
 	},

@@ -8,8 +8,7 @@ export default async function useLogin(_prevState: unknown, formdata: FormData) 
 		await signIn("credentials", {
 			email: formdata.get("email") as string,
 			senha: formdata.get("password") as string,
-			redirect: true,
-			redirectTo: "/dashboard",
+			redirect: true
 		});
 	} catch (error: unknown) {
 		if ((error as { type?: string }).type === "CredentialsSignin") {
