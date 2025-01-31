@@ -3,15 +3,26 @@ import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
+	const token = await getToken({ req: request });
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+	if (
+		request.nextUrl.pathname.startsWith("/login") ||
+		request.nextUrl.pathname.startsWith("/register")
+	) {
+		return NextResponse.next();
+	}
 
-  return NextResponse.next();
+	if (!token) {
+		return NextResponse.redirect(new URL("/login", request.url));
+	}
+
+	return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"], 
+	// matcher: ["/dashboard/:path*", "/"],
+	// matcher: ["/:path*"],
+	matcher: [
+		"/((?!_next/static|_next/image|favicon.ico|login|register|api/auth).*)",
+	],
 };

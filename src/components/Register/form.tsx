@@ -1,12 +1,10 @@
 "use client";
-import { useState } from "react";
-import { Button, Card, Col, Form, Input, Row, Space } from "antd";
+import { Button, Card, Col, Flex, Form, Input, Row } from "antd";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import apiClient from "@/lib/axios";
 
 function RegisterForm() {
-	const [showPassword, setShowPassword] = useState(false);
 	const router = useRouter();
 
 	const [form] = Form.useForm();
@@ -86,10 +84,7 @@ function RegisterForm() {
 								},
 							]}
 						>
-							<Input
-								placeholder="Senha"
-								type={showPassword ? "text" : "password"}
-							/>
+							<Input.Password placeholder="Senha" />
 						</Form.Item>
 						<Form.Item
 							label="Confirmar Senha"
@@ -101,44 +96,23 @@ function RegisterForm() {
 								},
 							]}
 						>
-							<Input
-								placeholder="Confirmar senha"
-								type={showPassword ? "text" : "password"}
-							/>
+							<Input.Password placeholder="Confirmar senha" />
 						</Form.Item>
-
-						<div className="flex my-4 items-center justify-between">
-							<div className="flex items-center">
-								<input
-									id="remember_me"
-									name="remember_me"
-									type="checkbox"
-									onClick={() =>
-										setShowPassword(!showPassword)
-									}
-									className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-								/>
-								<label
-									htmlFor="remember_me"
-									className="ml-2 block text-sm text-gray-900"
-								>
-									Mostrar senha
-								</label>
-							</div>
-						</div>
-						<Space style={{ width: "100%" }} size="middle">
-							<Button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-								<Link href="/login">Voltar</Link>
-							</Button>
+						<Flex gap={10}>
+							<Link href="/login" className="w-full">
+								<Button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+									Voltar
+								</Button>
+							</Link>
 
 							<Button
-								onClick={() => form.submit()}
+								// onClick={() => form.submit()}
 								htmlType="submit"
 								className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 							>
 								Criar conta
 							</Button>
-						</Space>
+						</Flex>
 					</Card>
 				</Col>
 			</Row>
