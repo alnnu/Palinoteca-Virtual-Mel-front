@@ -1,12 +1,10 @@
 "use client";
-import { useState } from "react";
 import { Button, Card, Col, Form, Input, Row } from "antd";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginForm() {
-	const [showPassword, setShowPassword] = useState(false);
 	const router = useRouter();
 	const [form] = Form.useForm();
 
@@ -48,6 +46,7 @@ export default function LoginForm() {
 							title="Login"
 						>
 							<Form.Item
+                                                                id="email"
 								label="Email"
 								name="email"
 								rules={[
@@ -60,6 +59,7 @@ export default function LoginForm() {
 								<Input
 									type="email"
 									placeholder="Endereço de Email"
+                                                                        autoComplete="email"
 								/>
 							</Form.Item>
 							<Form.Item
@@ -72,30 +72,16 @@ export default function LoginForm() {
 									},
 								]}
 							>
-								<Input
-									placeholder="Senha"
-									type={showPassword ? "text" : "password"}
-								/>
+								<Input.Password placeholder="Senha" />
 							</Form.Item>
 
-							<div className="flex my-4 items-center justify-between">
-								<div className="flex items-center">
-									<input
-										id="remember_me"
-										name="remember_me"
-										type="checkbox"
-										onClick={() =>
-											setShowPassword(!showPassword)
-										}
-										className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-									/>
-									<label
-										htmlFor="remember_me"
-										className="ml-2 block text-sm text-gray-900"
-									>
-										Mostrar senha
-									</label>
-								</div>
+							<div>
+								<Link
+									href={"/resetPassword"}
+									className="flex my-4 items-center justify-between"
+								>
+									Esqueci minha senha
+								</Link>
 							</div>
 							<div>
 								<Link

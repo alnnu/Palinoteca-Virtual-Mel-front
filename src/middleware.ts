@@ -12,8 +12,12 @@ const publicRoutes = [
 		whenAuthenticated: "redirect",
 	},
 	{
-		path: "pricing",
+		path: "/pricing",
 		whenAuthenticated: "next",
+	},
+	{
+		path: "/resetPassword",
+		whenAuthenticated: "redirect",
 	},
 ] as const;
 
