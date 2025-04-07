@@ -19,6 +19,10 @@ const publicRoutes = [
 		path: "/resetPassword",
 		whenAuthenticated: "redirect",
 	},
+	{
+		path: "/newPassword",
+		whenAuthenticated: "redirect",
+	},
 ] as const;
 
 export async function middleware(request: NextRequest) {
