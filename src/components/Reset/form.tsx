@@ -10,8 +10,8 @@ export default function ResetForm() {
 
 	const onFinish = async (values: { email: string }) => {
 		try {
-			const result = await apiClient.post("/resetPasswor/create", {
-				email: values.email,
+			const result = await apiClient.post("/auth/resetPassword/Create", {
+				userEmail: values.email,
 			});
 			if (result.status !== 200) {
 				// setError("An error occurred");

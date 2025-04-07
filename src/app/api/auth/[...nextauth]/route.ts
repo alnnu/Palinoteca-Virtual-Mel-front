@@ -19,11 +19,12 @@ const handler = NextAuth({
 			},
 			async authorize(credentials) {
 				try {
-					const response = await apiClient.post("/login", {
+
+					const response = await apiClient.post("/auth/login", {
 						email: credentials?.email,
 						password: credentials?.password,
 					});
-
+					console.log(response.data)
 					if (
 						response.data.user &&
 						response.data.access &&

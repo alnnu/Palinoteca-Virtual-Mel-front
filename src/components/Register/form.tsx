@@ -16,7 +16,7 @@ function RegisterForm() {
 		name: string;
 	}) => {
 		try {
-			const result = await apiClient.post("/create", {
+			const result = await apiClient.post("/auth/create", {
 				name: values.name,
 				email: values.email,
 				password: values.password,

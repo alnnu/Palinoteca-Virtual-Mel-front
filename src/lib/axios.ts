@@ -36,7 +36,7 @@ apiClient.interceptors.response.use(
 				}
 
 				const refreshResponse = await axios.post(
-					`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/refresh`,
+					`${process.env.NEXT_PUBLIC_BACKEND_URL_DEV}/auth/refresh`,
 					{
 						refreshToken: session.refreshToken,
 					}
