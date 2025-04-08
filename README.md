@@ -41,3 +41,4 @@ Além de comparar e confirmar a origem botânica das amostras de méis, a plataf
       - docker
       - Rede Neural Convolucional
 
+
