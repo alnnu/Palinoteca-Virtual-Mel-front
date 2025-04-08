@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Plataforma Digital com Uso de IA para Caracterização Botânica de Méis
+O presente projeto tem como objetivo realizar um levantamento botânico das plantas que alimentam as abelhas produtoras de mel na mesorregião de Anápolis, relacionando-as por meio da comparação de imagens entre os grãos de pólen das plantas e dos méis para caracterização de sua origem floral/botânica. Para essa comparação, serão utilizadas amostras coletadas em projetos de pesquisa realizados por meio de editais PIBIC e PIBITI, além de novas amostras que serão coletadas neste novo ciclo.
 
-## Getting Started
+A análise das imagens envolve grãos de pólen extraídos de botões florais e de amostras de méis, ambos passando por um processo químico de acetólise antes de serem dispostos em lâminas para análise microscópica. A proposta de inovação deste projeto está na parceria entre as áreas de química, biologia (botânica) e computação (inteligência artificial), visando criar uma plataforma que automatize a comparação das imagens dos grãos de pólen provenientes dos botões florais e dos méis.
 
-First, run the development server:
+Além de comparar e confirmar a origem botânica das amostras de méis, a plataforma terá acesso aberto, permitindo a inserção de novas imagens de pólens de diferentes espécies botânicas, visando a ampliação de seu uso.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+ 
+## Participantes
+- Luann
+- Pedro
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Índice
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  - [Roteiro do Trabalho](#roteiro-do-trabalho)
+    - [Recepção e organização das imagens de microscopia dos grãos de pólen ](#Recepção-e-organização-das-imagens-de-microscopia-dos-grãos-de-pólen)
+    - [Implementação da Palinoteca Virtual](#Implementação-da-Palinoteca-Virtual)
+    - [Implementação e treinamento do Modelo em IA para classificação das imagens](#Implementação-e-treinamento-do-Modelo-em-IA-para-classificação-das-imagens)
+  - [Tecnologias Usadas](#Tecnologias-Usadas)
+  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Roteiro do Trabalho
 
-## Learn More
+### Recepção e organização das imagens de microscopia dos grãos de pólen 
 
-To learn more about Next.js, take a look at the following resources:
+  Nessa etapa, sera realizado feito a organização e separação das imagem do grão de polem. Estas imagens foram coletadas, e continuarão sendo coletadas, por alunos de outro projeto.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Implementação da Palinoteca Virtual
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  A construção da Palinoteca sera feita utilizando as melhores praticas de Django e React juntamente com um banco em postegres.
+ 
+  Nela sera possível criar um usuário, mandar fotos do mel, ver os diferentes tipos de pólem, entre outros 
+### Implementação e treinamento do Modelo em IA para classificação das imagens
 
-## Deploy on Vercel
+  Sera construído uma Rede Neural Convolucional para classificar as imagens do mel com demais imagens de pólens no sistema 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tecnologias Usadas
+  Usamos as seguintes tecnologias:
+      - django
+      - react
+      - docker
+      - Rede Neural Convolucional
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
