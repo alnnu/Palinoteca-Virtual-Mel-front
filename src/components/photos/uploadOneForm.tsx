@@ -4,10 +4,12 @@
 import {Button, GetProp, Upload, UploadProps, Image} from "antd";
 import {useState} from "react";
 import apiClient from "@/lib/axios";
+import {useSteps} from "@/context/stepContex";
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 function UploadOneForm({user} : {user: string}) {
+    const { setSteps, setCurrStep } = useSteps()
 
     const [file, setFile] = useState<any>(null);
 
@@ -50,7 +52,21 @@ function UploadOneForm({user} : {user: string}) {
                 if (result.status !== 201) {
                     // setError(result.data.error);
                 } else {
-                    alert("ok") // Redirect to dashboard after successful login
+                   setSteps([
+                       {
+                           title: 'envio de foto',
+                           status: 'finish',
+                       },
+                       {
+                           title: 'Verificação',
+                           status: 'process',
+                       },
+                       {
+                           title: 'Resultado',
+                           status: 'wait',
+                       },
+                   ])
+                    setCurrStep(1)
                 }
             } catch (error) {
                 console.log("[ERROR]", error);

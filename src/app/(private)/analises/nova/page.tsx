@@ -1,40 +1,16 @@
-"use client"
-import {StepProps, Steps} from 'antd';
-import {useState} from "react";
-import UploadOneForm from "@/components/photos/uploadOneForm";
-import {useSession} from "next-auth/react";
+import {StepsProvider} from "@/context/stepContex";
+import AnalisesForm from "@/components/analises/form";
+
 
 function NovaAnalises() {
-    const { data: session, status } = useSession();
 
-    const [CurrStep, setCurrStep] = useState(0);
-    if (status === "loading") {
-        return <p>Loading...</p>;
 
-    }
-
-    const steps: StepProps[] = [
-        {
-            title: 'envio de foto',
-            status: 'process',
-        },
-        {
-            title: 'Verificação',
-            status: 'wait',
-        },
-        {
-            title: 'Resultado',
-            status: 'wait',
-        },
-    ];
     return (
-        <>
-            <Steps items={steps}/>
-            {
-                CurrStep == 0 ? <UploadOneForm user={session ? session.user.id: ""}/>: <></>
-            }
-        </>
+        <StepsProvider>
+            <AnalisesForm />
+        </StepsProvider>
     );
 }
+
 
 export default NovaAnalises;
