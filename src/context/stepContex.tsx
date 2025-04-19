@@ -2,6 +2,16 @@
 import {createContext, ReactNode, useContext, useState} from "react";
 import {StepProps} from "antd";
 
+type returnImage = {
+    id: string,
+    image: string,
+    scnario: {
+        id: string,
+        plant: string,
+        description: string
+    }
+}
+
 const StepContext = createContext<any>([])
 
 export const StepsProvider = ({ children }: { children: ReactNode }) => {
@@ -20,11 +30,12 @@ export const StepsProvider = ({ children }: { children: ReactNode }) => {
         },
     ]);
 
+    const [img, setImg] = useState<returnImage>()
     const [CurrStep, setCurrStep] = useState(0);
 
     return (
         <>
-            <StepContext.Provider value={{steps, setSteps, CurrStep, setCurrStep}}>
+            <StepContext.Provider value={{steps, setSteps, CurrStep, setCurrStep, img, setImg}}>
                 {children}
             </StepContext.Provider>
         </>

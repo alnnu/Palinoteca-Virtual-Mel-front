@@ -9,7 +9,7 @@ import {useSteps} from "@/context/stepContex";
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 function UploadOneForm({user} : {user: string}) {
-    const { setSteps, setCurrStep } = useSteps()
+    const { setSteps, setCurrStep, setImg } = useSteps()
 
     const [file, setFile] = useState<any>(null);
 
@@ -45,6 +45,23 @@ function UploadOneForm({user} : {user: string}) {
                 };
                 fmData.append("image", file);
                 fmData.append("user", user);
+
+                setSteps([
+                    {
+                        title: 'envio de foto',
+                        status: 'finish',
+                    },
+                    {
+                        title: 'Verificação',
+                        status: 'process',
+                    },
+                    {
+                        title: 'Resultado',
+                        status: 'wait',
+                    },
+                ])
+                setCurrStep(1)
+
                 const result = await apiClient
                     .post("/app/image/upload", fmData, config)
 
@@ -59,27 +76,26 @@ function UploadOneForm({user} : {user: string}) {
                        },
                        {
                            title: 'Verificação',
-                           status: 'process',
+                           status: 'finish',
                        },
                        {
                            title: 'Resultado',
-                           status: 'wait',
+                           status: 'finish',
                        },
                    ])
-                    setCurrStep(1)
+                    setCurrStep(2)
+                    setImg(result.data)
                 }
             } catch (error) {
                 console.log("[ERROR]", error);
             }
-
     }
 
 
     return (
         <>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full h-fit">
             <div className="h-52 w-96">
-
                 <Upload.Dragger
                     listType="picture"
                     accept = "image/*"

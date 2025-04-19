@@ -5,6 +5,6 @@ export default function AnalisesSteps() {
     const { steps } = useSteps();
 
     return (
-        <Steps items={steps}/>
+        <Steps items={steps} className="mb-12"/>
     )
 }
