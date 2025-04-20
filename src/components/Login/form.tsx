@@ -1,5 +1,5 @@
 "use client";
-import { Button, Card, Col, Form, Input, Row } from "antd";
+import { Button, Card, Col, Form, Input, message, Row } from "antd";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -7,6 +7,14 @@ import Link from "next/link";
 export default function LoginForm() {
   const router = useRouter();
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const error = () => {
+    messageApi.open({
+      type: 'error',
+      content: 'Email ou senha inválidos',
+    });
+  };
 
   const onFinish = async (values: { email: string; password: string }) => {
     try {
@@ -17,7 +25,7 @@ export default function LoginForm() {
         callbackUrl: "/dashboard",
       });
       if (result?.error) {
-        // setError(result.error);
+        error();
       } else {
         router.push("/dashboard");
       }
@@ -28,7 +36,7 @@ export default function LoginForm() {
 
   return (
     <>
-      {/* {state?.error && <p className="text-red-500">{state.error}</p>} */}
+      {contextHolder}
       <Form
         layout="vertical"
         name="basic"
