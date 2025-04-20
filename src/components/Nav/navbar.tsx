@@ -13,9 +13,9 @@ function Navbar() {
       href: "/analises",
     },
     {
-      key: "mels",
-      label: "mels",
-      href: "/mels",
+      key: "polen",
+      label: "pólen",
+      href: "/polen",
     },
     {
       key: "sair",
