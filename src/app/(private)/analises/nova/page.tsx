@@ -1,15 +1,12 @@
-import {StepsProvider} from "@/context/stepContex";
-import AnalisesForm from "@/components/analises/form";
-
+import { StepsProvider } from "@/context/stepContext";
+import AnalisesForm from "@/components/Analises/form";
 
 function NovaAnalises() {
-
-
-    return (
-        <StepsProvider>
-            <AnalisesForm />
-        </StepsProvider>
-    );
+  return (
+    <StepsProvider>
+      <AnalisesForm />
+    </StepsProvider>
+  );
 }
 
 
