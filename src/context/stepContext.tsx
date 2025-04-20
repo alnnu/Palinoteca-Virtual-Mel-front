@@ -7,7 +7,7 @@ const StepContext = createContext<StepContextType | undefined>(undefined);
 
 export const StepsProvider = ({ children }: { children: ReactNode }) => {
   const [steps, setSteps] = useState<StepProps[]>([
-    { title: 'envio de foto', status: 'process' },
+    { title: 'Enviar foto', status: 'process' },
     { title: 'Verificação', status: 'wait' },
     { title: 'Resultado', status: 'wait' },
   ]);

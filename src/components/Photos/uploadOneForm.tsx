@@ -28,11 +28,12 @@ function UploadOneForm({ user }: { user: string }) {
     if (!image.url && !image.preview) {
       image.preview = await getBase64(image.file as FileType);
     }
-    setPreviewImage(image.url || (image.preview as string));
+    setPreviewImage(image.url ?? (image.preview as string));
     setPreviewOpen(true);
   }
   const onRemove = () => {
     setFile(null);
+    setPreviewImage('')
   }
   const onFinish = async () => {
 
@@ -60,9 +61,7 @@ function UploadOneForm({ user }: { user: string }) {
       ])
       setCurrStep(1)
 
-      const result = await apiClient
-        .post("/app/image/upload", fmData, config)
-
+      const result = await apiClient.post("/app/image/upload", fmData, config)
 
       if (result.status !== 201) {
         // setError(result.data.error);
@@ -89,34 +88,53 @@ function UploadOneForm({ user }: { user: string }) {
     }
   }
 
-
   return (
     <div className="flex flex-col items-center justify-center w-full h-fit">
       <div className="h-52 w-96">
-        <Upload.Dragger
-          listType="picture"
-          accept="image/*"
-          fileList={file ? [file] : []}
-          maxCount={1}
-          customRequest={(e) => { onAdd(e) }}
-          onRemove={onRemove}
-        >
-          <div className="flex justify-center flex-col ">
-            <div className="mb-2">Arraste a imagem ou</div>
-            <Button > clique aqui </Button>
-          </div>
-        </Upload.Dragger>
+        {previewImage ? (
+          <Upload
+            listType="picture"
+            accept="image/*"
+            fileList={file ? [file] : []}
+            maxCount={1}
+            showUploadList={{ showRemoveIcon: true }}
+            customRequest={(e) => onAdd(e)}
+            onRemove={onRemove}
+            className="w-full"
+          >
+            <Button type="dashed" className="mt-2 w-96">Trocar imagem</Button>
+          </Upload>
+        ) : (
+          <Upload.Dragger
+            listType="picture"
+            accept="image/*"
+            fileList={file ? [file] : []}
+            maxCount={1}
+            customRequest={(e) => onAdd(e)}
+            onRemove={onRemove}
+          >
+            <div className="flex justify-center flex-col">
+              <div className="mb-2">Arraste a imagem ou</div>
+              <Button>clique aqui</Button>
+            </div>
+          </Upload.Dragger>
+        )}
 
         {previewImage && (
-          <Image
-            wrapperStyle={{ display: 'none' }}
-            preview={{
-              visible: previewOpen,
-              onVisibleChange: (visible) => setPreviewOpen(visible),
-              afterOpenChange: (visible) => !visible && setPreviewImage(''),
-            }}
-            src={previewImage}
-          />
+          <div className="cursor-pointer mt-4">
+            <Image
+              onClick={() => setPreviewOpen(true)}
+              src={previewImage}
+              alt="Preview"
+              width={390}
+              preview={{
+                visible: previewOpen,
+                onVisibleChange: (visible) => {
+                  setPreviewOpen(visible);
+                },
+              }}
+            />
+          </div>
         )}
 
         <div className="flex justify-between mt-9 w-full">

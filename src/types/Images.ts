@@ -9,7 +9,7 @@ export type Scenario = {
 export type ReturnImage = {
   id: string;
   image: string;
-  scnario: Scenario;
+  scenario: Scenario;
 };
 
 export type StepContextType = {
