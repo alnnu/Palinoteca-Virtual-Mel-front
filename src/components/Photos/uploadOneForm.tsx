@@ -1,5 +1,5 @@
 "use client"
-import { Button, GetProp, Upload, UploadProps, Image } from "antd";
+import {Button, GetProp, Upload, UploadProps, Image, message} from "antd";
 import { useState } from "react";
 import apiClient from "@/lib/axios";
 import { useSteps } from "@/context/stepContext";
@@ -13,6 +13,15 @@ function UploadOneForm({ user }: { user: string }) {
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const error = () => {
+    messageApi.open({
+      type: 'error',
+      content: 'Email ou senha inválidos',
+    });
+  };
 
   const getBase64 = (file: FileType): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -64,7 +73,7 @@ function UploadOneForm({ user }: { user: string }) {
       const result = await apiClient.post("/app/image/upload", fmData, config)
 
       if (result.status !== 201) {
-        // setError(result.data.error);
+        error()
       } else {
         setSteps([
           {
@@ -83,78 +92,83 @@ function UploadOneForm({ user }: { user: string }) {
         setCurrStep(2)
         setImg(result.data)
       }
-    } catch (error) {
-      console.log("[ERROR]", error);
+    } catch (msg) {
+      error()
+      console.log("[ERROR]", msg);
     }
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-fit">
-      <div className="h-52 w-96">
-        {previewImage ? (
-          <Upload
-            listType="picture"
-            accept="image/*"
-            fileList={file ? [file] : []}
-            maxCount={1}
-            showUploadList={{ showRemoveIcon: true }}
-            customRequest={(e) => onAdd(e)}
-            onRemove={onRemove}
-            className="w-full"
-          >
-            <Button type="dashed" className="mt-2 w-96">Trocar imagem</Button>
-          </Upload>
-        ) : (
-          <Upload.Dragger
-            listType="picture"
-            accept="image/*"
-            fileList={file ? [file] : []}
-            maxCount={1}
-            customRequest={(e) => onAdd(e)}
-            onRemove={onRemove}
-          >
-            <div className="flex justify-center flex-col">
-              <div className="mb-2">Arraste a imagem ou</div>
-              <Button>clique aqui</Button>
+      <>
+        {contextHolder}
+        <div className="flex flex-col items-center justify-center w-full h-fit">
+          <div className="h-52 w-96">
+            {previewImage ? (
+                <Upload
+                    listType="picture"
+                    accept="image/*"
+                    fileList={file ? [file] : []}
+                    maxCount={1}
+                    showUploadList={{ showRemoveIcon: true }}
+                    customRequest={(e) => onAdd(e)}
+                    onRemove={onRemove}
+                    className="w-full"
+                >
+                  <Button type="dashed" className="mt-2 w-96">Trocar imagem</Button>
+                </Upload>
+            ) : (
+                <Upload.Dragger
+                    listType="picture"
+                    accept="image/*"
+                    fileList={file ? [file] : []}
+                    maxCount={1}
+                    customRequest={(e) => onAdd(e)}
+                    onRemove={onRemove}
+                >
+                  <div className="flex justify-center flex-col">
+                    <div className="mb-2">Arraste a imagem ou</div>
+                    <Button>clique aqui</Button>
+                  </div>
+                </Upload.Dragger>
+            )}
+
+            {previewImage && (
+                <div className="cursor-pointer mt-4">
+                  <Image
+                      onClick={() => setPreviewOpen(true)}
+                      src={previewImage}
+                      alt="Preview"
+                      width={390}
+                      preview={{
+                        visible: previewOpen,
+                        onVisibleChange: (visible) => {
+                          setPreviewOpen(visible);
+                        },
+                      }}
+                  />
+                </div>
+            )}
+
+            <div className="flex justify-between mt-9 w-full">
+              <Button
+                  type="primary"
+                  className="group relative w-5/12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={() => onFinish()}
+              >
+                enviar
+              </Button>
+              <Button
+                  type="primary"
+                  className="group relative w-5/12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={() => onRemove()}
+              >
+                reniciar
+              </Button>
             </div>
-          </Upload.Dragger>
-        )}
-
-        {previewImage && (
-          <div className="cursor-pointer mt-4">
-            <Image
-              onClick={() => setPreviewOpen(true)}
-              src={previewImage}
-              alt="Preview"
-              width={390}
-              preview={{
-                visible: previewOpen,
-                onVisibleChange: (visible) => {
-                  setPreviewOpen(visible);
-                },
-              }}
-            />
           </div>
-        )}
-
-        <div className="flex justify-between mt-9 w-full">
-          <Button
-            type="primary"
-            className="group relative w-5/12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onClick={() => onFinish()}
-          >
-            enviar
-          </Button>
-          <Button
-            type="primary"
-            className="group relative w-5/12 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onClick={() => onRemove()}
-          >
-            reniciar
-          </Button>
         </div>
-      </div>
-    </div>
+      </>
+
   );
 }
 
