@@ -9,23 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "antd": "^5.23.2",
-    "axios": "^1.7.9",
-    "next": "15.1.6",
+    "@ant-design/nextjs-registry": "^1.0.2",
+    "antd": "^5.24.7",
+    "axios": "^1.8.4",
+    "clsx": "^2.1.1",
+    "next": "^15.3.1",
     "next-auth": "^4.24.11",
-    "react": "18",
-    "react-dom": "18",
-    "zod": "^3.24.1"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-merge": "^3.2.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^9",
+    "typescript": "^5.8.3",
+    "@types/node": "^20.17.30",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "eslint": "^9.25.0",
     "eslint-config-next": "15.1.6",
-    "@eslint/eslintrc": "^3"
+    "@eslint/eslintrc": "^3.3.1"
   }
 }
