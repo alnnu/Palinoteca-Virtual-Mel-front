@@ -15,6 +15,21 @@ function UploadOneForm({ user, messageApi }: { user: string, messageApi: any }) 
 
 
   const error = () => {
+    setSteps([
+      {
+        title: 'envio de foto',
+        status: 'process',
+      },
+      {
+        title: 'Verificação',
+        status: 'wait',
+      },
+      {
+        title: 'Resultado',
+        status: 'wait',
+      },
+    ])
+    setCurrStep(0)
     messageApi.open({
       type: 'error',
       content: 'Não foi possível enviar a imagem, tente novamente.',
@@ -73,7 +88,6 @@ function UploadOneForm({ user, messageApi }: { user: string, messageApi: any }) 
 
       if (result.status !== 201) {
         error()
-        setCurrStep(0)
       } else {
         setSteps([
           {
@@ -94,7 +108,6 @@ function UploadOneForm({ user, messageApi }: { user: string, messageApi: any }) 
       }
     } catch (msg) {
       error()
-      setCurrStep(0)
       console.log("[ERROR]", msg);
     }
   }
