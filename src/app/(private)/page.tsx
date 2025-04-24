@@ -1,10 +1,13 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
-
-// import { getServerSession } from "next-auth";
+// server side
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+// import { getServerSession } from "next-auth"
 
 function Dashboard() {
   const { data: session, status } = useSession();
+  // const session = await getServerSession(authOptions) // or directly if defined in route handler
+  // const token = session?.access
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -14,8 +17,6 @@ function Dashboard() {
     return <p>You are not authenticated.</p>;
   }
 
-  // const session = getServerSession();
-  // console.log("session", session);
 
   return (
     <>
@@ -26,6 +27,7 @@ function Dashboard() {
         <p>Your session has expired. Please sign in again.</p>
         <button onClick={() => signOut()}>Sign Out</button>
       </div>
+      {/* <pre>{JSON.stringify(session, null, 2)}</pre> */}
     </>
   );
 }
