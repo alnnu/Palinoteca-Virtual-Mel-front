@@ -22,12 +22,12 @@ export default function LoginForm() {
         redirect: false,
         email: values.email,
         password: values.password,
-        callbackUrl: "/dashboard",
+        callbackUrl: "/",
       });
       if (result?.error) {
         error();
       } else {
-        router.push("/dashboard");
+        router.push("/");
       }
     } catch (error) {
       console.log("[LOGIN_ERROR]", error);

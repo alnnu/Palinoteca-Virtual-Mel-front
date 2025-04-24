@@ -21,3 +21,9 @@ export type StepContextType = {
   setImg: React.Dispatch<React.SetStateAction<ReturnImage | null>>;
 };
 
+export type ScenarioPage = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Scenario[];
+}
