@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {ImagePage} from "@/types/Images";
 import axios from "@/lib/axios";
 import ImageCard from "@/components/Analises/imageCard";
+import {Flex} from "antd";
 
 function Analises() {
     const { data: session, status } = useSession();
@@ -39,15 +40,16 @@ function Analises() {
         }
 
     }
-
-    console.log(`${process.env.NEXT_PUBLIC_BACKEND_MEDIA_URL_DEV}${images?.results[0].image}`)
+    console.log(images)
     return (
         <div>
-            {
-                images?.results.map((file, i) => (
-                    <ImageCard key={i} file={file}/>
-                ))
-            }
+            <Flex wrap gap="large" align="center" justify="center">
+                {
+                    images?.results.map((file, i) => (
+                        <ImageCard key={i} file={file}/>
+                    ))
+                }
+            </Flex>
         </div>
     );
 }
