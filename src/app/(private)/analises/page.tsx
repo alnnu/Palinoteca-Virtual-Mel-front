@@ -15,7 +15,7 @@ function Analises() {
     const getImages = async (id: string | undefined) => {
 
         return await fetchDataServer(() =>
-            apiClient.get(`/app/image/${id}/all`)
+            apiClient.get(`/app/image/images/${id}/all`)
         )
     }
 
@@ -36,15 +36,18 @@ function Analises() {
 
     console.log(images)
     return (
-        <div>
-            <Row
-                align="middle"
-                justify="center"
-            >
+        <div style={{ padding: 24 }}>
+            <Row gutter={[16, 16]} justify="center">
                 {
                     images?.results.map((file, i) => (
                         <Col
-                            key={i}
+                            key={file.id}
+                            xs={24}
+                            sm={24}
+                            md={12}
+                            lg={8}
+                            xl={6}
+                            style={{ display: 'flex', justifyContent: 'center' }}
                         >
                             <ImageCard file={file}/>
                         </Col>
