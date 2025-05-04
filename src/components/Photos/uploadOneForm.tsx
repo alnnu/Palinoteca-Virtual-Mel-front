@@ -1,18 +1,41 @@
 "use client"
-import { Button, GetProp, Upload, UploadProps, Image } from "antd";
+import { Button, GetProp, Upload, UploadProps, Image, message } from "antd";
 import { useState } from "react";
 import apiClient from "@/lib/axios";
 import { useSteps } from "@/context/stepContext";
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
-function UploadOneForm({ user }: { user: string }) {
+function UploadOneForm({ user, messageApi }: { user: string, messageApi: any }) {
   const { setSteps, setCurrStep, setImg } = useSteps()
 
   const [file, setFile] = useState<any>(null);
-
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
+
+
+  const error = () => {
+    setSteps([
+      {
+        title: 'envio de foto',
+        status: 'process',
+      },
+      {
+        title: 'Verificação',
+        status: 'wait',
+      },
+      {
+        title: 'Resultado',
+        status: 'wait',
+      },
+    ])
+    setCurrStep(0)
+    messageApi.open({
+      type: 'error',
+      content: 'Não foi possível enviar a imagem, tente novamente.',
+      duration: 5,
+    });
+  };
 
   const getBase64 = (file: FileType): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -64,7 +87,7 @@ function UploadOneForm({ user }: { user: string }) {
       const result = await apiClient.post("/app/image/upload", fmData, config)
 
       if (result.status !== 201) {
-        // setError(result.data.error);
+        error()
       } else {
         setSteps([
           {
@@ -83,8 +106,9 @@ function UploadOneForm({ user }: { user: string }) {
         setCurrStep(2)
         setImg(result.data)
       }
-    } catch (error) {
-      console.log("[ERROR]", error);
+    } catch (msg) {
+      error()
+      console.log("[ERROR]", msg);
     }
   }
 

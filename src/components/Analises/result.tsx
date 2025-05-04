@@ -19,7 +19,7 @@ function Result() {
     return null;
   }
 
-  const imageURL = `${process.env.NEXT_PUBLIC_BACKEND_MEDIA_URL_DEV}/${img.image}`
+  const imageURL = `${process.env.NEXT_PUBLIC_BACKEND_MEDIA_URL_DEV}${img.image}`
 
   return (
     <Flex justify="space-between" gap="large" align={"center"}>

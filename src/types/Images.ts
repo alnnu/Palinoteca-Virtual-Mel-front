@@ -12,6 +12,13 @@ export type ReturnImage = {
   scenario: Scenario;
 };
 
+export type ImagePage = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: ReturnImage[];
+}
+
 export type StepContextType = {
   steps: StepProps[];
   setSteps: React.Dispatch<React.SetStateAction<StepProps[]>>;
